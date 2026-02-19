@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🏆 Score Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --accent: #6c63ff;
+      --accent2: #ff6584;
+      --accent3: #43e97b;
+      --text: #e8eaf6;
+      --text-muted: #8b8fa8;
+      --border: #2e3250;
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a1d27 0%, #22263a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .last-updated {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--surface2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 24px;
+    }
+
+    /* ── CARD BASE ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── ADD POINTS CARD ── */
+    .add-card {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #1a1d27 0%, #1e2138 100%);
+    }
+    .add-card .card-icon { background: rgba(108,99,255,0.15); }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 16px;
+      align-items: end;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+    }
+    .form-group select option { background: var(--surface2); }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.4); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: var(--accent3); color: var(--accent3); }
+    #toast.error { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ── LEADERBOARD TABLES ── */
+    .team-card .card-icon { background: rgba(255,101,132,0.15); }
+    .person-card .card-icon { background: rgba(67,233,123,0.15); }
+
+    .leaderboard { width: 100%; border-collapse: collapse; }
+    .leaderboard thead th {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 12px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .leaderboard thead th:last-child { text-align: right; }
+    .leaderboard tbody tr {
+      transition: background 0.15s;
+      border-radius: var(--radius-sm);
+    }
+    .leaderboard tbody tr:hover { background: var(--surface2); }
+    .leaderboard tbody td {
+      padding: 14px 12px;
+      font-size: 0.875rem;
+      border-bottom: 1px solid rgba(46,50,80,0.5);
+    }
+    .leaderboard tbody tr:last-child td { border-bottom: none; }
+    .leaderboard td:last-child { text-align: right; }
+
+    .rank {
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rank-1 { background: rgba(255,215,0,0.15); color: var(--gold); }
+    .rank-2 { background: rgba(192,192,192,0.15); color: var(--silver); }
+    .rank-3 { background: rgba(205,127,50,0.15); color: var(--bronze); }
+    .rank-n { background: var(--surface2); color: var(--text-muted); }
+
+    .score-badge {
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .team-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(108,99,255,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(108,99,255,0.2);
+    }
+
+    /* Progress bar */
+    .progress-wrap { display: flex; align-items: center; gap: 10px; }
+    .progress-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.6s ease;
+    }
+
+    /* ── STATS TOP ── */
+    .stats-row {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .stat-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    .empty-state span { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; padding: 20px 16px; }
+      .add-card { grid-column: 1; }
+      .stats-row { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid .btn-submit { grid-column: 1 / -1; justify-content: center; }
+      header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-title">🏆 Score Dashboard</div>
+    <div class="header-sub">Classifica in tempo reale</div>
+  </div>
+  <div class="last-updated" id="lastUpdated">Caricamento...</div>
+</header>
+
+<main>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(108,99,255,0.15)">👥</div>
+      <div>
+        <div class="stat-value" id="statPartecipanti">—</div>
+        <div class="stat-label">Partecipanti</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(255,101,132,0.15)">🚩</div>
+      <div>
+        <div class="stat-value" id="statSquadre">—</div>
+        <div class="stat-label">Squadre</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(67,233,123,0.15)">⭐</div>
+      <div>
+        <div class="stat-value" id="statTotale">—</div>
+        <div class="stat-label">Punti totali assegnati</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD POINTS -->
+  <div class="card add-card">
+    <div class="card-header">
+      <div class="card-icon">➕</div>
+      <div>
+        <div class="card-title">Aggiungi Punteggio</div>
+        <div class="card-subtitle">Seleziona partecipante, attività e punti</div>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Partecipante</label>
+        <select id="selectPartecipante">
+          <option value="">Seleziona...</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Attività</label>
+        <input type="text" id="inputAttivita" placeholder="es. Quiz 1, Sfida 3..."/>
+      </div>
+      <div class="form-group">
+        <label>Punti</label>
+        <input type="number" id="inputPunti" placeholder="es. 10" min="0"/>
+      </div>
+      <button class="btn-submit" id="btnSubmit" onclick="submitScore()">
+        <span id="btnText">Salva</span>
+        <span id="btnIcon">💾</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TEAM LEADERBOARD -->
+  <div class="card team-card">
+    <div class="card-header">
+      <div class="card-icon">🚩</div>
+      <div>
+        <div class="card-title">Classifica Squadre</div>
+        <div class="card-subtitle">Punteggio cumulativo per team</div>
+      </div>
+    </div>
+    <div id="teamLeaderboard"><div class="empty-state"><span>🔄</span>Caricamento...</div></div>
+  </div>
+
+  <!-- PERSON LEADERBOARD -->
+  <div class="card person-card">
+    <div class="card-header">
+      <div class="card-icon">👤</div>
+      <div>
+        <div class="card-title">Classifica Persone</div>
+        <div class="card-subtitle">Top performer individuali</div>
+      </div>
+    </div>
+    <div id="personLeaderboard"><div class="empty-state"><span>🔄</span>Caricamento...</div></div>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  // ════════════════════════════════════════════
+  //  ⚙️  CONFIGURAZIONE — modifica questi valori
+  // ════════════════════════════════════════════
+  const SHEET_ID   = "1ke54qMCzDy97yV4fauh1F3-h0-bT6BTdDr4Rp4oh6U0";           // ID del Google Sheet
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMgyP4WL3Paq6xp37EYgvzX7AoWhg2kxFI8aORDOLhVWYrjahFwKiTwt7IUwOrQZTlBA/exec"; // URL del Web App (Apps Script)
+  // ════════════════════════════════════════════
+
+  const READ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Punteggi`;
+  const PARTICIPANTS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partecipanti`;
+
+  // ── INIT ──
+  window.onload = () => {
+    loadParticipants();
+    loadLeaderboards();
+  };
+
+  // ── CARICA PARTECIPANTI nel select ──
+  async function loadParticipants() {
+    try {
+      const res = await fetch(PARTICIPANTS_URL);
+      const text = await res.text();
+      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+      const rows = json.table.rows;
+      const sel = document.getElementById("selectPartecipante");
+      sel.innerHTML = '<option value="">Seleziona...</option>';
+      rows.forEach(row => {
+        if (!row.c[0] || !row.c[0].v) return;
+        const nome = row.c[0].v;
+        const opt = document.createElement("option");
+        opt.value = nome;
+        opt.textContent = nome;
+        sel.appendChild(opt);
+      });
+    } catch(e) {
+      console.error("Errore caricamento partecipanti:", e);
+    }
+  }
+
+  // ── CARICA CLASSIFICHE ──
+  async function loadLeaderboards() {
+    try {
+      const res = await fetch(READ_URL + "&t=" + Date.now());
+      const text = await res.text();
+      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+      const rows = json.table.rows;
+
+      const teamScores = {};
+      const personScores = {};
+      const personTeam = {};
+      let totalPoints = 0;
+
+      rows.forEach(row => {
+        if (!row.c[0] || !row.c[0].v) return;
+        const nome    = row.c[0].v;
+        const squadra = row.c[1] ? row.c[1].v : "—";
+        const punti   = row.c[3] ? parseFloat(row.c[3].v) : 0;
+
+        // Team
+        teamScores[squadra] = (teamScores[squadra] || 0) + punti;
+        // Person
+        personScores[nome] = (personScores[nome] || 0) + punti;
+        personTeam[nome] = squadra;
+        totalPoints += punti;
+      });
+
+      // Stats
+      document.getElementById("statPartecipanti").textContent = Object.keys(personScores).length;
+      document.getElementById("statSquadre").textContent      = Object.keys(teamScores).length;
+      document.getElementById("statTotale").textContent       = totalPoints;
+
+      // Team leaderboard
+      renderTeamLeaderboard(teamScores);
+      // Person leaderboard
+      renderPersonLeaderboard(personScores, personTeam);
+
+      // Last updated
+      document.getElementById("lastUpdated").textContent = "Aggiornato: " + new Date().toLocaleTimeString("it-IT");
+
+    } catch(e) {
+      console.error("Errore leaderboard:", e);
+      document.getElementById("teamLeaderboard").innerHTML = '<div class="empty-state"><span>⚠️</span>Errore caricamento dati</div>';
+      document.getElementById("personLeaderboard").innerHTML = '<div class="empty-state"><span>⚠️</span>Errore caricamento dati</div>';
+    }
+  }
+
+  function renderTeamLeaderboard(teamScores) {
+    const sorted = Object.entries(teamScores).sort((a,b) => b[1]-a[1]);
+    if (!sorted.length) {
+      document.getElementById("teamLeaderboard").innerHTML = '<div class="empty-state"><span>📭</span>Nessun dato ancora</div>';
+      return;
+    }
+    const maxScore = sorted[0][1];
+    let html = `<table class="leaderboard"><thead><tr>
+      <th>#</th><th>Squadra</th><th>Progressione</th><th>Punti</th>
+    </tr></thead><tbody>`;
+    sorted.forEach(([team, score], i) => {
+      const rankClass = i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank-n";
+      const pct = Math.round((score/maxScore)*100);
+      html += `<tr>
+        <td><span class="rank ${rankClass}">${i+1}</span></td>
+        <td><strong>${team}</strong></td>
+        <td><div class="progress-wrap">
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+          <span style="font-size:0.75rem;color:var(--text-muted);min-width:30px">${pct}%</span>
+        </div></td>
+        <td><span class="score-badge">${score}</span></td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById("teamLeaderboard").innerHTML = html;
+  }
+
+  function renderPersonLeaderboard(personScores, personTeam) {
+    const sorted = Object.entries(personScores).sort((a,b) => b[1]-a[1]);
+    if (!sorted.length) {
+      document.getElementById("personLeaderboard").innerHTML = '<div class="empty-state"><span>📭</span>Nessun dato ancora</div>';
+      return;
+    }
+    let html = `<table class="leaderboard"><thead><tr>
+      <th>#</th><th>Nome</th><th>Squadra</th><th>Punti</th>
+    </tr></thead><tbody>`;
+    sorted.forEach(([nome, score], i) => {
+      const rankClass = i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank-n";
+      html += `<tr>
+        <td><span class="rank ${rankClass}">${i+1}</span></td>
+        <td><strong>${nome}</strong></td>
+        <td><span class="team-badge">${personTeam[nome]||"—"}</span></td>
+        <td><span class="score-badge">${score}</span></td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    document.getElementById("personLeaderboard").innerHTML = html;
+  }
+
+  // ── SUBMIT SCORE ──
+  async function submitScore() {
+    const nome     = document.getElementById("selectPartecipante").value;
+    const attivita = document.getElementById("inputAttivita").value.trim();
+    const punti    = document.getElementById("inputPunti").value.trim();
+
+    if (!nome)     { showToast("⚠️ Seleziona un partecipante", "error"); return; }
+    if (!attivita) { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
+    if (!punti || isNaN(punti) || Number(punti) < 0) { showToast("⚠️ Inserisci un punteggio valido", "error"); return; }
+
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({ nome, attivita, punti });
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: params
+      });
+      const data = await res.json();
+      if (data.status === "ok") {
+        showToast("✅ Punteggio salvato correttamente!", "success");
+        document.getElementById("inputAttivita").value = "";
+        document.getElementById("inputPunti").value = "";
+        document.getElementById("selectPartecipante").value = "";
+        setTimeout(loadLeaderboards, 1200);
+      } else {
+        showToast("❌ Errore: " + (data.message || "riprova"), "error");
+      }
+    } catch(e) {
+      showToast("❌ Errore di rete, riprova", "error");
+    }
+    setLoading(false);
+  }
+
+  function setLoading(loading) {
+    const btn = document.getElementById("btnSubmit");
+    btn.disabled = loading;
+    document.getElementById("btnText").textContent = loading ? "Salvataggio..." : "Salva";
+    document.getElementById("btnIcon").innerHTML = loading ? '<span class="spinner"></span>' : "💾";
+  }
+
+  function showToast(msg, type) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "show " + type;
+    setTimeout(() => { t.className = ""; }, 3500);
+  }
+</script>
+</body>
+</html>
