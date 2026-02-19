@@ -462,6 +462,7 @@
       const sel = document.getElementById("selectPartecipante");
       sel.innerHTML = '<option value="">Seleziona...</option>';
       rows.forEach(row => {
+        if (index === 0) return;
         if (!row.c[0] || !row.c[0].v) return;
         const nome = row.c[0].v;
         const opt = document.createElement("option");
