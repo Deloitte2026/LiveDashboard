@@ -23,318 +23,120 @@
       --radius-sm: 10px;
       --shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    /* ── HEADER ── */
     header {
       background: linear-gradient(135deg, #1a1d27 0%, #22263a 100%);
       border-bottom: 1px solid var(--border);
       padding: 28px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
     }
     .header-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .header-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .last-updated {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      background: var(--surface2);
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-    }
+    .header-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .last-updated { font-size: 0.75rem; color: var(--text-muted); background: var(--surface2); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); }
 
-    /* ── MAIN LAYOUT ── */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 24px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto;
-      gap: 24px;
-    }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
-    /* ── CARD BASE ── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .card-icon {
-      width: 40px; height: 40px;
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-    .card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .card-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+    .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+    .card-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .card-title { font-size: 1rem; font-weight: 700; }
+    .card-subtitle { font-size: 0.75rem; color: var(--text-muted); }
 
-    /* ── ADD POINTS CARD ── */
-    .add-card {
-      grid-column: 1 / -1;
-      background: linear-gradient(135deg, #1a1d27 0%, #1e2138 100%);
-    }
+    .stats-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; align-items: center; gap: 18px; }
+    .stat-icon { width: 52px; height: 52px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .stat-value { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+    .add-card { grid-column: 1 / -1; }
     .add-card .card-icon { background: rgba(108,99,255,0.15); }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: 16px;
-      align-items: end;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      padding: 12px 16px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
-    }
+    /* TABS */
+    .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+    .tab-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: "Inter", sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 16px; align-items: end; }
+    .attendance-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; }
+    .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .form-group input, .form-group select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: "Inter", sans-serif; font-size: 0.9rem; padding: 12px 16px; transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.15); }
     .form-group select option { background: var(--surface2); }
 
-    .btn-submit {
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 12px 28px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* QUICK BUTTONS */
+    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .quick-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .quick-buttons { display: flex; gap: 12px; }
+    .btn-quick { flex: 1; padding: 14px 8px; border: none; border-radius: var(--radius-sm); font-family: "Inter", sans-serif; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .btn-quick:hover { transform: translateY(-2px); }
+    .btn-quick:active { transform: translateY(0); }
+    .btn-quick .pts { font-size: 1.4rem; font-weight: 800; }
+    .btn-quick .lbl { font-size: 0.65rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
+    .btn-gold   { background: linear-gradient(135deg, #f6d365, #fda085); color: #3a2000; }
+    .btn-gold:hover   { box-shadow: 0 8px 20px rgba(253,160,133,0.4); }
+    .btn-silver { background: linear-gradient(135deg, #cfd9df, #e2ebf0); color: #2a3040; }
+    .btn-silver:hover { box-shadow: 0 8px 20px rgba(207,217,223,0.4); }
+    .btn-bronze { background: linear-gradient(135deg, #cd7f32, #e8a87c); color: #3a1500; }
+    .btn-bronze:hover { box-shadow: 0 8px 20px rgba(205,127,50,0.4); }
+
+    .btn-submit { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; border: none; border-radius: var(--radius-sm); padding: 12px 28px; font-family: "Inter", sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
     .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.4); }
-    .btn-submit:active { transform: translateY(0); }
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* Toast */
-    #toast {
-      position: fixed;
-      bottom: 32px; right: 32px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      box-shadow: var(--shadow);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    #toast.show { opacity: 1; transform: translateY(0); }
-    #toast.success { border-color: var(--accent3); color: var(--accent3); }
-    #toast.error { border-color: var(--accent2); color: var(--accent2); }
-
-    /* ── LEADERBOARD TABLES ── */
-    .team-card .card-icon { background: rgba(255,101,132,0.15); }
+    /* LEADERBOARD */
+    .team-card .card-icon   { background: rgba(255,101,132,0.15); }
     .person-card .card-icon { background: rgba(67,233,123,0.15); }
-
     .leaderboard { width: 100%; border-collapse: collapse; }
-    .leaderboard thead th {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0 12px 12px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
+    .leaderboard thead th { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 12px 12px; text-align: left; border-bottom: 1px solid var(--border); }
     .leaderboard thead th:last-child { text-align: right; }
-    .leaderboard tbody tr {
-      transition: background 0.15s;
-      border-radius: var(--radius-sm);
-    }
+    .leaderboard tbody tr { transition: background 0.15s; }
     .leaderboard tbody tr:hover { background: var(--surface2); }
-    .leaderboard tbody td {
-      padding: 14px 12px;
-      font-size: 0.875rem;
-      border-bottom: 1px solid rgba(46,50,80,0.5);
-    }
+    .leaderboard tbody td { padding: 14px 12px; font-size: 0.875rem; border-bottom: 1px solid rgba(46,50,80,0.5); }
     .leaderboard tbody tr:last-child td { border-bottom: none; }
     .leaderboard td:last-child { text-align: right; }
-
-    .rank {
-      font-size: 0.8rem;
-      font-weight: 700;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .rank-1 { background: rgba(255,215,0,0.15); color: var(--gold); }
+    .rank { font-size: 0.8rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+    .rank-1 { background: rgba(255,215,0,0.15);   color: var(--gold); }
     .rank-2 { background: rgba(192,192,192,0.15); color: var(--silver); }
-    .rank-3 { background: rgba(205,127,50,0.15); color: var(--bronze); }
-    .rank-n { background: var(--surface2); color: var(--text-muted); }
-
-    .score-badge {
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      color: white;
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: 4px 12px;
-      border-radius: 20px;
-    }
-
-    .team-badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(108,99,255,0.1);
-      color: var(--accent);
-      border: 1px solid rgba(108,99,255,0.2);
-    }
-
-    /* Progress bar */
+    .rank-3 { background: rgba(205,127,50,0.15);  color: var(--bronze); }
+    .rank-n { background: var(--surface2);         color: var(--text-muted); }
+    .score-badge { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; }
+    .team-badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(108,99,255,0.1); color: var(--accent); border: 1px solid rgba(108,99,255,0.2); }
     .progress-wrap { display: flex; align-items: center; gap: 10px; }
-    .progress-bar-bg {
-      flex: 1;
-      height: 6px;
-      background: var(--surface2);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transition: width 0.6s ease;
-    }
+    .progress-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.6s ease; }
 
-    /* ── STATS TOP ── */
-    .stats-row {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-    .stat-icon {
-      width: 52px; height: 52px;
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-    }
-    .stat-value {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
+    /* INFO BOX */
+    .info-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 18px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+    .info-box strong { color: var(--text); }
 
-    /* Loading spinner */
-    .spinner {
-      display: inline-block;
-      width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,0.2);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
+    #toast { position: fixed; bottom: 32px; right: 32px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 20px; font-size: 0.85rem; font-weight: 500; box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; z-index: 999; }
+    #toast.show    { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: var(--accent3); color: var(--accent3); }
+    #toast.error   { border-color: var(--accent2); color: var(--accent2); }
+
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .empty-state {
-      text-align: center;
-      padding: 32px;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-    }
+    .empty-state { text-align: center; padding: 32px; color: var(--text-muted); font-size: 0.875rem; }
     .empty-state span { font-size: 2rem; display: block; margin-bottom: 8px; }
 
     @media (max-width: 768px) {
       main { grid-template-columns: 1fr; padding: 20px 16px; }
-      .add-card { grid-column: 1; }
+      .add-card, .stats-row { grid-column: 1; }
       .stats-row { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr 1fr; }
-      .form-grid .btn-submit { grid-column: 1 / -1; justify-content: center; }
+      .form-grid, .attendance-grid { grid-template-columns: 1fr; }
+      .form-grid .btn-submit, .attendance-grid .btn-submit { justify-content: center; }
+      .quick-grid { grid-template-columns: 1fr; }
       header { padding: 20px; }
     }
   </style>
@@ -355,59 +157,112 @@
   <div class="stats-row">
     <div class="stat-card">
       <div class="stat-icon" style="background:rgba(108,99,255,0.15)">👥</div>
-      <div>
-        <div class="stat-value" id="statPartecipanti">—</div>
-        <div class="stat-label">Partecipanti</div>
-      </div>
+      <div><div class="stat-value" id="statPartecipanti">—</div><div class="stat-label">Partecipanti</div></div>
     </div>
     <div class="stat-card">
       <div class="stat-icon" style="background:rgba(255,101,132,0.15)">🚩</div>
-      <div>
-        <div class="stat-value" id="statSquadre">—</div>
-        <div class="stat-label">Squadre</div>
-      </div>
+      <div><div class="stat-value" id="statSquadre">—</div><div class="stat-label">Squadre</div></div>
     </div>
     <div class="stat-card">
       <div class="stat-icon" style="background:rgba(67,233,123,0.15)">⭐</div>
-      <div>
-        <div class="stat-value" id="statTotale">—</div>
-        <div class="stat-label">Punti totali assegnati</div>
-      </div>
+      <div><div class="stat-value" id="statTotale">—</div><div class="stat-label">Punti totali assegnati</div></div>
     </div>
   </div>
 
-  <!-- ADD POINTS -->
+  <!-- GESTIONE PUNTEGGI -->
   <div class="card add-card">
     <div class="card-header">
       <div class="card-icon">➕</div>
       <div>
-        <div class="card-title">Aggiungi Punteggio</div>
-        <div class="card-subtitle">Seleziona partecipante, attività e punti</div>
+        <div class="card-title">Gestione Punteggi</div>
+        <div class="card-subtitle">Inserimento manuale, challenge o importazione presenze Teams</div>
       </div>
     </div>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Partecipante</label>
-        <select id="selectPartecipante">
-          <option value="">Seleziona...</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Attività</label>
-        <input type="text" id="inputAttivita" placeholder="es. Quiz 1, Sfida 3..."/>
-      </div>
-      <div class="form-group">
-        <label>Punti</label>
-        <input type="number" id="inputPunti" placeholder="es. 10" min="0"/>
-      </div>
-      <button class="btn-submit" id="btnSubmit" onclick="submitScore()">
-        <span id="btnText">Salva</span>
-        <span id="btnIcon">💾</span>
-      </button>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(event,'manual')">✏️ Manuale</button>
+      <button class="tab-btn" onclick="switchTab(event,'challenge')">🏅 Challenge</button>
+      <button class="tab-btn" onclick="switchTab(event,'attendance')">📋 Presenze Teams</button>
     </div>
+
+    <!-- TAB MANUALE -->
+    <div class="tab-panel active" id="tab-manual">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Partecipante</label>
+          <select id="selectPartecipante"><option value="">Seleziona...</option></select>
+        </div>
+        <div class="form-group">
+          <label>Attività</label>
+          <input type="text" id="inputAttivita" placeholder="es. Quiz 1, Sfida 3..."/>
+        </div>
+        <div class="form-group">
+          <label>Punti</label>
+          <input type="number" id="inputPunti" placeholder="es. 10" min="0"/>
+        </div>
+        <button class="btn-submit" id="btnSubmit" onclick="submitScore()">
+          <span id="btnText">Salva</span>
+          <span id="btnIcon">💾</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB CHALLENGE -->
+    <div class="tab-panel" id="tab-challenge">
+      <div class="info-box">
+        Seleziona il partecipante, scrivi il nome della challenge e clicca il posto ottenuto per assegnare i punti automaticamente. I punti vengono salvati anche nello sheet punteggi principale.
+      </div>
+      <div class="quick-grid">
+        <div class="form-group">
+          <label>Partecipante</label>
+          <select id="selectChallenge"><option value="">Seleziona...</option></select>
+        </div>
+        <div class="form-group">
+          <label>Nome Challenge</label>
+          <input type="text" id="inputChallengeName" placeholder="es. Kahoot Round 1"/>
+        </div>
+      </div>
+      <div class="quick-label">Assegna punti rapidi</div>
+      <div class="quick-buttons">
+        <button class="btn-quick btn-gold" onclick="submitQuick(30)">
+          <span class="pts">+30</span><span class="lbl">🥇 1° posto</span>
+        </button>
+        <button class="btn-quick btn-silver" onclick="submitQuick(20)">
+          <span class="pts">+20</span><span class="lbl">🥈 2° posto</span>
+        </button>
+        <button class="btn-quick btn-bronze" onclick="submitQuick(10)">
+          <span class="pts">+10</span><span class="lbl">🥉 3° posto</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB PRESENZE TEAMS -->
+    <div class="tab-panel" id="tab-attendance">
+      <div class="info-box">
+        Importa il report Teams dallo <strong>sheet presenze separato</strong>. Inserisci il nome esatto del foglio
+        (es. <strong>26-feb</strong>) e il nome dell'attività che apparirà in classifica.
+        Verranno assegnati <strong>10 punti</strong> a chi ha partecipato per almeno <strong>50 minuti</strong>.
+        I duplicati vengono ignorati automaticamente.
+      </div>
+      <div class="attendance-grid">
+        <div class="form-group">
+          <label>Nome foglio nello sheet presenze</label>
+          <input type="text" id="inputFoglio" placeholder="es. 26-feb"/>
+        </div>
+        <div class="form-group">
+          <label>Nome attività</label>
+          <input type="text" id="inputNomeRiunione" placeholder="es. Riunione Teams 26 feb"/>
+        </div>
+        <button class="btn-submit" id="btnAttendance" onclick="submitAttendance()">
+          <span id="btnAttText">Importa</span>
+          <span id="btnAttIcon">📋</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- TEAM LEADERBOARD -->
+  <!-- CLASSIFICA SQUADRE -->
   <div class="card team-card">
     <div class="card-header">
       <div class="card-icon">🚩</div>
@@ -419,7 +274,7 @@
     <div id="teamLeaderboard"><div class="empty-state"><span>🔄</span>Caricamento...</div></div>
   </div>
 
-  <!-- PERSON LEADERBOARD -->
+  <!-- CLASSIFICA PERSONE -->
   <div class="card person-card">
     <div class="card-header">
       <div class="card-icon">👤</div>
@@ -436,184 +291,187 @@
 <div id="toast"></div>
 
 <script>
-  // ════════════════════════════════════════════
-  //  ⚙️  CONFIGURAZIONE — modifica questi valori
-  // ════════════════════════════════════════════
-  const SHEET_ID   = "1ke54qMCzDy97yV4fauh1F3-h0-bT6BTdDr4Rp4oh6U0";           // ID del Google Sheet
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMgyP4WL3Paq6xp37EYgvzX7AoWhg2kxFI8aORDOLhVWYrjahFwKiTwt7IUwOrQZTlBA/exec"; // URL del Web App (Apps Script)
-  // ════════════════════════════════════════════
+  // ════════════════════════════════════════
+  //  ⚙️ CONFIGURAZIONE — modifica questi valori
+  // ════════════════════════════════════════
+  const SHEET_ID        = "1ke54qMCzDy97yV4fauh1F3-h0-bT6BTdDr4Rp4oh6U0";     // sheet con Partecipanti e Punteggi
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMgyP4WL3Paq6xp37EYgvzX7AoWhg2kxFI8aORDOLhVWYrjahFwKiTwt7IUwOrQZTlBA/exec"; // URL del Web App
+  // ════════════════════════════════════════
 
-  const READ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Punteggi`;
+  const READ_URL         = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Punteggi`;
   const PARTICIPANTS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partecipanti`;
 
-  // ── INIT ──
-  window.onload = () => {
-    loadParticipants();
-    loadLeaderboards();
-  };
+  window.onload = () => { loadParticipants(); loadLeaderboards(); };
 
-  // ── CARICA PARTECIPANTI nel select ──
-  async function loadParticipants() {
-    try {
-      const res = await fetch(PARTICIPANTS_URL);
-      const text = await res.text();
-      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
-      const rows = json.table.rows;
-      const sel = document.getElementById("selectPartecipante");
-      sel.innerHTML = '<option value="">Seleziona...</option>';
-      rows.forEach(row => {
-        if (!row.c[0] || !row.c[0].v) return;
-        const nome = row.c[0].v;
-        const opt = document.createElement("option");
-        opt.value = nome;
-        opt.textContent = nome;
-        sel.appendChild(opt);
-      });
-    } catch(e) {
-      console.error("Errore caricamento partecipanti:", e);
-    }
+  // ── TABS ──
+  function switchTab(event, name) {
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById("tab-" + name).classList.add("active");
+    event.target.classList.add("active");
   }
 
-  // ── CARICA CLASSIFICHE ──
-  async function loadLeaderboards() {
+  // ── CARICA PARTECIPANTI (nei due select: manuale e challenge) ──
+  async function loadParticipants() {
     try {
-      const res = await fetch(READ_URL + "&t=" + Date.now());
+      const res  = await fetch(PARTICIPANTS_URL);
       const text = await res.text();
       const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
       const rows = json.table.rows;
+      ["selectPartecipante", "selectChallenge"].forEach(id => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = "<option value=''>Seleziona...</option>";
+        rows.forEach((row, index) => {
+          if (index === 0) return;
+          if (!row.c[0] || !row.c[0].v) return;
+          const opt = document.createElement("option");
+          opt.value = opt.textContent = row.c[0].v;
+          sel.appendChild(opt);
+        });
+      });
+    } catch(e) { console.error("Errore partecipanti:", e); }
+  }
 
-      const teamScores = {};
-      const personScores = {};
-      const personTeam = {};
-      let totalPoints = 0;
-
+  // ── CLASSIFICHE ──
+  async function loadLeaderboards() {
+    try {
+      const res  = await fetch(READ_URL + "&t=" + Date.now());
+      const text = await res.text();
+      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+      const rows = json.table.rows;
+      const teamScores = {}, personScores = {}, personTeam = {};
+      let total = 0;
       rows.forEach(row => {
         if (!row.c[0] || !row.c[0].v) return;
         const nome    = row.c[0].v;
         const squadra = row.c[1] ? row.c[1].v : "—";
         const punti   = row.c[3] ? parseFloat(row.c[3].v) : 0;
-
-        // Team
-        teamScores[squadra] = (teamScores[squadra] || 0) + punti;
-        // Person
-        personScores[nome] = (personScores[nome] || 0) + punti;
-        personTeam[nome] = squadra;
-        totalPoints += punti;
+        teamScores[squadra]  = (teamScores[squadra]  || 0) + punti;
+        personScores[nome]   = (personScores[nome]   || 0) + punti;
+        personTeam[nome]     = squadra;
+        total               += punti;
       });
-
-      // Stats
       document.getElementById("statPartecipanti").textContent = Object.keys(personScores).length;
       document.getElementById("statSquadre").textContent      = Object.keys(teamScores).length;
-      document.getElementById("statTotale").textContent       = totalPoints;
-
-      // Team leaderboard
+      document.getElementById("statTotale").textContent       = total;
       renderTeamLeaderboard(teamScores);
-      // Person leaderboard
       renderPersonLeaderboard(personScores, personTeam);
-
-      // Last updated
       document.getElementById("lastUpdated").textContent = "Aggiornato: " + new Date().toLocaleTimeString("it-IT");
-
     } catch(e) {
-      console.error("Errore leaderboard:", e);
-      document.getElementById("teamLeaderboard").innerHTML = '<div class="empty-state"><span>⚠️</span>Errore caricamento dati</div>';
-      document.getElementById("personLeaderboard").innerHTML = '<div class="empty-state"><span>⚠️</span>Errore caricamento dati</div>';
+      ["teamLeaderboard","personLeaderboard"].forEach(id => {
+        document.getElementById(id).innerHTML = "<div class='empty-state'><span>⚠️</span>Errore caricamento dati</div>";
+      });
     }
   }
 
-  function renderTeamLeaderboard(teamScores) {
-    const sorted = Object.entries(teamScores).sort((a,b) => b[1]-a[1]);
-    if (!sorted.length) {
-      document.getElementById("teamLeaderboard").innerHTML = '<div class="empty-state"><span>📭</span>Nessun dato ancora</div>';
-      return;
-    }
-    const maxScore = sorted[0][1];
-    let html = `<table class="leaderboard"><thead><tr>
-      <th>#</th><th>Squadra</th><th>Progressione</th><th>Punti</th>
-    </tr></thead><tbody>`;
+  function renderTeamLeaderboard(scores) {
+    const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+    if (!sorted.length) { document.getElementById("teamLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato ancora</div>"; return; }
+    const max = sorted[0][1];
+    let html = "<table class='leaderboard'><thead><tr><th>#</th><th>Squadra</th><th>Progressione</th><th>Punti</th></tr></thead><tbody>";
     sorted.forEach(([team, score], i) => {
-      const rankClass = i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank-n";
-      const pct = Math.round((score/maxScore)*100);
-      html += `<tr>
-        <td><span class="rank ${rankClass}">${i+1}</span></td>
-        <td><strong>${team}</strong></td>
-        <td><div class="progress-wrap">
-          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
-          <span style="font-size:0.75rem;color:var(--text-muted);min-width:30px">${pct}%</span>
-        </div></td>
-        <td><span class="score-badge">${score}</span></td>
-      </tr>`;
+      const rc = ["rank-1","rank-2","rank-3"][i] || "rank-n";
+      const pct = Math.round((score/max)*100);
+      html += `<tr><td><span class="rank ${rc}">${i+1}</span></td><td><strong>${team}</strong></td>
+        <td><div class="progress-wrap"><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <span style="font-size:.75rem;color:var(--text-muted);min-width:30px">${pct}%</span></div></td>
+        <td><span class="score-badge">${score}</span></td></tr>`;
     });
-    html += '</tbody></table>';
-    document.getElementById("teamLeaderboard").innerHTML = html;
+    document.getElementById("teamLeaderboard").innerHTML = html + "</tbody></table>";
   }
 
-  function renderPersonLeaderboard(personScores, personTeam) {
-    const sorted = Object.entries(personScores).sort((a,b) => b[1]-a[1]);
-    if (!sorted.length) {
-      document.getElementById("personLeaderboard").innerHTML = '<div class="empty-state"><span>📭</span>Nessun dato ancora</div>';
-      return;
-    }
-    let html = `<table class="leaderboard"><thead><tr>
-      <th>#</th><th>Nome</th><th>Squadra</th><th>Punti</th>
-    </tr></thead><tbody>`;
+  function renderPersonLeaderboard(scores, teams) {
+    const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+    if (!sorted.length) { document.getElementById("personLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato ancora</div>"; return; }
+    let html = "<table class='leaderboard'><thead><tr><th>#</th><th>Nome</th><th>Squadra</th><th>Punti</th></tr></thead><tbody>";
     sorted.forEach(([nome, score], i) => {
-      const rankClass = i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank-n";
-      html += `<tr>
-        <td><span class="rank ${rankClass}">${i+1}</span></td>
-        <td><strong>${nome}</strong></td>
-        <td><span class="team-badge">${personTeam[nome]||"—"}</span></td>
-        <td><span class="score-badge">${score}</span></td>
-      </tr>`;
+      const rc = ["rank-1","rank-2","rank-3"][i] || "rank-n";
+      html += `<tr><td><span class="rank ${rc}">${i+1}</span></td><td><strong>${nome}</strong></td>
+        <td><span class="team-badge">${teams[nome]||"—"}</span></td>
+        <td><span class="score-badge">${score}</span></td></tr>`;
     });
-    html += '</tbody></table>';
-    document.getElementById("personLeaderboard").innerHTML = html;
+    document.getElementById("personLeaderboard").innerHTML = html + "</tbody></table>";
   }
 
-  // ── SUBMIT SCORE ──
+  // ── SUBMIT MANUALE ──
   async function submitScore() {
     const nome     = document.getElementById("selectPartecipante").value;
     const attivita = document.getElementById("inputAttivita").value.trim();
     const punti    = document.getElementById("inputPunti").value.trim();
+    if (!nome)                                    { showToast("⚠️ Seleziona un partecipante", "error"); return; }
+    if (!attivita)                                { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
+    if (!punti || isNaN(punti) || +punti < 0)    { showToast("⚠️ Inserisci un punteggio valido", "error"); return; }
 
-    if (!nome)     { showToast("⚠️ Seleziona un partecipante", "error"); return; }
-    if (!attivita) { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
-    if (!punti || isNaN(punti) || Number(punti) < 0) { showToast("⚠️ Inserisci un punteggio valido", "error"); return; }
-
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ nome, attivita, punti });
-      const res = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        body: params
-      });
-      const data = await res.json();
-      if (data.status === "ok") {
-        showToast("✅ Punteggio salvato correttamente!", "success");
-        document.getElementById("inputAttivita").value = "";
-        document.getElementById("inputPunti").value = "";
-        document.getElementById("selectPartecipante").value = "";
-        setTimeout(loadLeaderboards, 1200);
-      } else {
-        showToast("❌ Errore: " + (data.message || "riprova"), "error");
-      }
-    } catch(e) {
-      showToast("❌ Errore di rete, riprova", "error");
+    setBtnLoading("btnSubmit", "btnText", "btnIcon", true);
+    const ok = await callScript({ action: "addScore", nome, attivita, punti });
+    if (ok) {
+      document.getElementById("selectPartecipante").value = "";
+      document.getElementById("inputAttivita").value      = "";
+      document.getElementById("inputPunti").value         = "";
+      showToast("✅ Punteggio salvato!", "success");
+      setTimeout(loadLeaderboards, 1200);
     }
-    setLoading(false);
+    setBtnLoading("btnSubmit", "btnText", "btnIcon", false, "Salva", "💾");
   }
 
-  function setLoading(loading) {
-    const btn = document.getElementById("btnSubmit");
+  // ── SUBMIT CHALLENGE (bottoni rapidi) ──
+  async function submitQuick(punti) {
+    const nome     = document.getElementById("selectChallenge").value;
+    const attivita = document.getElementById("inputChallengeName").value.trim();
+    if (!nome)     { showToast("⚠️ Seleziona un partecipante", "error"); return; }
+    if (!attivita) { showToast("⚠️ Inserisci il nome della challenge", "error"); return; }
+    const ok = await callScript({ action: "addScore", nome, attivita, punti });
+    if (ok) {
+      showToast(`✅ +${punti} punti assegnati a ${nome}!`, "success");
+      setTimeout(loadLeaderboards, 1200);
+    }
+  }
+
+  // ── SUBMIT PRESENZE TEAMS ──
+  async function submitAttendance() {
+    const foglio   = document.getElementById("inputFoglio").value.trim();
+    const attivita = document.getElementById("inputNomeRiunione").value.trim();
+    if (!foglio)   { showToast("⚠️ Inserisci il nome del foglio", "error"); return; }
+    if (!attivita) { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
+
+    setBtnLoading("btnAttendance", "btnAttText", "btnAttIcon", true, "Importazione...");
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL, { method: "POST", body: new URLSearchParams({ action: "importAttendance", foglio, attivita }) });
+      const data = await res.json();
+      if (data.status === "ok") {
+        showToast(`✅ Importati ${data.assegnati} partecipanti con ≥50 min!`, "success");
+        document.getElementById("inputFoglio").value       = "";
+        document.getElementById("inputNomeRiunione").value = "";
+        setTimeout(loadLeaderboards, 1200);
+      } else {
+        showToast("❌ " + (data.message || "Errore importazione"), "error");
+      }
+    } catch(e) { showToast("❌ Errore di rete, riprova", "error"); }
+    setBtnLoading("btnAttendance", "btnAttText", "btnAttIcon", false, "Importa", "📋");
+  }
+
+  // ── HELPER: chiama Apps Script ──
+  async function callScript(payload) {
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL, { method: "POST", body: new URLSearchParams(payload) });
+      const data = await res.json();
+      if (data.status !== "ok") { showToast("❌ " + (data.message || "Errore"), "error"); return false; }
+      return true;
+    } catch(e) { showToast("❌ Errore di rete, riprova", "error"); return false; }
+  }
+
+  // ── HELPER: loading button ──
+  function setBtnLoading(btnId, textId, iconId, loading, loadingText, defaultIcon) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
     btn.disabled = loading;
-    document.getElementById("btnText").textContent = loading ? "Salvataggio..." : "Salva";
-    document.getElementById("btnIcon").innerHTML = loading ? '<span class="spinner"></span>' : "💾";
+    if (textId) document.getElementById(textId).textContent = loading ? (loadingText || "Salvataggio...") : (defaultIcon === "📋" ? "Importa" : "Salva");
+    if (iconId) document.getElementById(iconId).innerHTML   = loading ? "<span class='spinner'></span>" : (defaultIcon || "");
   }
 
   function showToast(msg, type) {
     const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.className = "show " + type;
+    t.textContent = msg; t.className = "show " + type;
     setTimeout(() => { t.className = ""; }, 3500);
   }
 </script>
