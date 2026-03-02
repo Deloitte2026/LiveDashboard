@@ -7,148 +7,141 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
-      --accent: #6c63ff; --accent2: #ff6584; --accent3: #43e97b;
-      --text: #e8eaf6; --text-muted: #8b8fa8; --border: #2e3250;
-      --gold: #ffd700; --silver: #c0c0c0; --bronze: #cd7f32;
-      --radius: 16px; --radius-sm: 10px; --shadow: 0 8px 32px rgba(0,0,0,0.4);
+      --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;
+      --accent:#6c63ff;--accent2:#ff6584;--accent3:#43e97b;
+      --text:#e8eaf6;--text-muted:#8b8fa8;--border:#2e3250;
+      --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;
+      --radius:16px;--radius-sm:10px;--shadow:0 8px 32px rgba(0,0,0,0.4);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-    header { background: linear-gradient(135deg, #1a1d27 0%, #22263a 100%); border-bottom: 1px solid var(--border); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .header-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .header-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
-    .last-updated { font-size: 0.75rem; color: var(--text-muted); background: var(--surface2); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); }
-
-    main { max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
-    .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
-    .card-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .card-title { font-size: 1rem; font-weight: 700; }
-    .card-subtitle { font-size: 0.75rem; color: var(--text-muted); }
-
-    .stats-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; align-items: center; gap: 18px; }
-    .stat-icon { width: 52px; height: 52px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-    .stat-value { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
-    .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
-
-    .add-card { grid-column: 1 / -1; }
-    .add-card .card-icon { background: rgba(108,99,255,0.15); }
-
-    .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
-    .tab-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: "Inter", sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-    .tab-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 16px; align-items: end; }
-    .attendance-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; }
-    .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .form-group input, .form-group select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: "Inter", sans-serif; font-size: 0.9rem; padding: 12px 16px; transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
-    .form-group input:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.15); }
-    .form-group select option { background: var(--surface2); }
-
-    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-    .quick-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .quick-buttons { display: flex; gap: 12px; flex: 1; }
-    .btn-quick { flex: 1; padding: 14px 8px; border: none; border-radius: var(--radius-sm); font-family: "Inter", sans-serif; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, outline 0.1s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .btn-quick:hover { transform: translateY(-2px); }
-    .btn-quick:active { transform: translateY(0); }
-    .btn-quick .pts { font-size: 1.4rem; font-weight: 800; }
-    .btn-quick .lbl { font-size: 0.65rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
-    .btn-gold   { background: linear-gradient(135deg, #f6d365, #fda085); color: #3a2000; }
-    .btn-silver { background: linear-gradient(135deg, #cfd9df, #e2ebf0); color: #2a3040; }
-    .btn-bronze { background: linear-gradient(135deg, #cd7f32, #e8a87c); color: #3a1500; }
-    .btn-gold:hover   { box-shadow: 0 8px 20px rgba(253,160,133,0.4); }
-    .btn-silver:hover { box-shadow: 0 8px 20px rgba(207,217,223,0.4); }
-    .btn-bronze:hover { box-shadow: 0 8px 20px rgba(205,127,50,0.4); }
-    /* SELECTED STATE */
-    .btn-quick.selected { transform: translateY(-3px) scale(1.05); }
-    .btn-gold.selected   { outline: 3px solid #fda085; outline-offset: 3px; box-shadow: 0 8px 24px rgba(253,160,133,0.6); }
-    .btn-silver.selected { outline: 3px solid #b0bec5; outline-offset: 3px; box-shadow: 0 8px 24px rgba(207,217,223,0.5); }
-    .btn-bronze.selected { outline: 3px solid #cd7f32; outline-offset: 3px; box-shadow: 0 8px 24px rgba(205,127,50,0.6); }
-
-    .btn-submit { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; border: none; border-radius: var(--radius-sm); padding: 12px 28px; font-family: "Inter", sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
-    .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.4); }
-    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-    .team-card .card-icon   { background: rgba(255,101,132,0.15); }
-    .person-card .card-icon { background: rgba(67,233,123,0.15); }
-    .leaderboard { width: 100%; border-collapse: collapse; }
-    .leaderboard thead th { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 12px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-    .leaderboard thead th:last-child { text-align: right; }
-    .leaderboard tbody tr { transition: background 0.15s; }
-    .leaderboard tbody tr:hover { background: var(--surface2); }
-    .leaderboard tbody td { padding: 14px 12px; font-size: 0.875rem; border-bottom: 1px solid rgba(46,50,80,0.5); }
-    .leaderboard tbody tr:last-child td { border-bottom: none; }
-    .leaderboard td:last-child { text-align: right; }
-    .rank { font-size: 0.8rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
-    .rank-1 { background: rgba(255,215,0,0.15);   color: var(--gold); }
-    .rank-2 { background: rgba(192,192,192,0.15); color: var(--silver); }
-    .rank-3 { background: rgba(205,127,50,0.15);  color: var(--bronze); }
-    .rank-n { background: var(--surface2);         color: var(--text-muted); }
-    .score-badge { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; }
-    .team-badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(108,99,255,0.1); color: var(--accent); border: 1px solid rgba(108,99,255,0.2); }
-    .progress-wrap { display: flex; align-items: center; gap: 10px; }
-    .progress-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.6s ease; }
-
-    .info-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 18px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
-    .info-box strong { color: var(--text); }
-
-    #toast { position: fixed; bottom: 32px; right: 32px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 20px; font-size: 0.85rem; font-weight: 500; box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; z-index: 999; }
-    #toast.show    { opacity: 1; transform: translateY(0); }
-    #toast.success { border-color: var(--accent3); color: var(--accent3); }
-    #toast.error   { border-color: var(--accent2); color: var(--accent2); }
-
-    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .empty-state { text-align: center; padding: 32px; color: var(--text-muted); font-size: 0.875rem; }
-    .empty-state span { font-size: 2rem; display: block; margin-bottom: 8px; }
-
-    @media (max-width: 768px) {
-      main { grid-template-columns: 1fr; padding: 20px 16px; }
-      .add-card, .stats-row { grid-column: 1; }
-      .stats-row { grid-template-columns: 1fr; }
-      .form-grid, .attendance-grid { grid-template-columns: 1fr; }
-      .quick-grid { grid-template-columns: 1fr; }
-      header { padding: 20px; }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+    header{background:linear-gradient(135deg,#1a1d27 0%,#22263a 100%);border-bottom:1px solid var(--border);padding:24px 40px;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:100;}
+    .header-left{flex:1;}
+    .header-title{font-size:1.5rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .header-sub{font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
+    .session-wrap{display:flex;flex-direction:column;gap:4px;}
+    .session-wrap label{font-size:0.72rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+    #sessionSelect{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:"Inter",sans-serif;font-size:0.9rem;padding:10px 16px;min-width:180px;appearance:none;cursor:pointer;outline:none;}
+    #sessionSelect:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,99,255,.15);}
+    .last-updated{font-size:.75rem;color:var(--text-muted);background:var(--surface2);padding:6px 14px;border-radius:20px;border:1px solid var(--border);white-space:nowrap;}
+    main{max-width:1200px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);}
+    .card-header{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+    .card-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+    .card-title{font-size:1rem;font-weight:700;}
+    .card-subtitle{font-size:.75rem;color:var(--text-muted);}
+    .stats-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;align-items:center;gap:18px;}
+    .stat-icon{width:52px;height:52px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+    .stat-value{font-size:1.8rem;font-weight:800;letter-spacing:-1px;line-height:1;}
+    .stat-label{font-size:.75rem;color:var(--text-muted);margin-top:4px;}
+    .add-card{grid-column:1/-1;}
+    .add-card .card-icon{background:rgba(108,99,255,.15);}
+    .tabs{display:flex;gap:8px;margin-bottom:24px;}
+    .tab-btn{padding:8px 20px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:"Inter",sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;}
+    .tab-btn.active{background:var(--accent);border-color:var(--accent);color:white;}
+    .tab-btn:hover:not(.active){border-color:var(--accent);color:var(--text);}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:16px;align-items:end;}
+    .attendance-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:end;}
+    .form-group label{display:block;font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+    .form-group input,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:"Inter",sans-serif;font-size:.9rem;padding:12px 16px;transition:border-color .2s,box-shadow .2s;outline:none;appearance:none;}
+    .form-group input:focus,.form-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,99,255,.15);}
+    .form-group select option{background:var(--surface2);}
+    .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+    .quick-label{font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+    .quick-buttons{display:flex;gap:12px;flex:1;}
+    .btn-quick{flex:1;padding:14px 8px;border:none;border-radius:var(--radius-sm);font-family:"Inter",sans-serif;cursor:pointer;transition:transform .15s,box-shadow .15s,outline .1s;display:flex;flex-direction:column;align-items:center;gap:4px;}
+    .btn-quick:hover{transform:translateY(-2px);}
+    .btn-quick .pts{font-size:1.4rem;font-weight:800;}
+    .btn-quick .lbl{font-size:.65rem;opacity:.85;text-transform:uppercase;letter-spacing:.5px;}
+    .btn-gold{background:linear-gradient(135deg,#f6d365,#fda085);color:#3a2000;}
+    .btn-silver{background:linear-gradient(135deg,#cfd9df,#e2ebf0);color:#2a3040;}
+    .btn-bronze{background:linear-gradient(135deg,#cd7f32,#e8a87c);color:#3a1500;}
+    .btn-gold:hover{box-shadow:0 8px 20px rgba(253,160,133,.4);}
+    .btn-silver:hover{box-shadow:0 8px 20px rgba(207,217,223,.4);}
+    .btn-bronze:hover{box-shadow:0 8px 20px rgba(205,127,50,.4);}
+    .btn-quick.selected{transform:translateY(-3px) scale(1.05);}
+    .btn-gold.selected{outline:3px solid #fda085;outline-offset:3px;box-shadow:0 8px 24px rgba(253,160,133,.6);}
+    .btn-silver.selected{outline:3px solid #b0bec5;outline-offset:3px;box-shadow:0 8px 24px rgba(207,217,223,.5);}
+    .btn-bronze.selected{outline:3px solid #cd7f32;outline-offset:3px;box-shadow:0 8px 24px rgba(205,127,50,.6);}
+    .btn-submit{background:linear-gradient(135deg,var(--accent),#8b5cf6);color:white;border:none;border-radius:var(--radius-sm);padding:12px 28px;font-family:"Inter",sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s,opacity .2s;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+    .btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,.4);}
+    .btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+    .team-card .card-icon{background:rgba(255,101,132,.15);}
+    .person-card .card-icon{background:rgba(67,233,123,.15);}
+    .leaderboard{width:100%;border-collapse:collapse;}
+    .leaderboard thead th{font-size:.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;padding:0 12px 12px;text-align:left;border-bottom:1px solid var(--border);}
+    .leaderboard thead th:last-child{text-align:right;}
+    .leaderboard tbody tr{transition:background .15s;}
+    .leaderboard tbody tr:hover{background:var(--surface2);}
+    .leaderboard tbody td{padding:14px 12px;font-size:.875rem;border-bottom:1px solid rgba(46,50,80,.5);}
+    .leaderboard tbody tr:last-child td{border-bottom:none;}
+    .leaderboard td:last-child{text-align:right;}
+    .rank{font-size:.8rem;font-weight:700;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;}
+    .rank-1{background:rgba(255,215,0,.15);color:var(--gold);}
+    .rank-2{background:rgba(192,192,192,.15);color:var(--silver);}
+    .rank-3{background:rgba(205,127,50,.15);color:var(--bronze);}
+    .rank-n{background:var(--surface2);color:var(--text-muted);}
+    .score-badge{background:linear-gradient(135deg,var(--accent),#8b5cf6);color:white;font-weight:700;font-size:.8rem;padding:4px 12px;border-radius:20px;}
+    .team-badge{display:inline-block;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(108,99,255,.1);color:var(--accent);border:1px solid rgba(108,99,255,.2);}
+    .progress-wrap{display:flex;align-items:center;gap:10px;}
+    .progress-bar-bg{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+    .progress-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s ease;}
+    .info-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;font-size:.82rem;color:var(--text-muted);line-height:1.6;margin-bottom:20px;}
+    .info-box strong{color:var(--text);}
+    #toast{position:fixed;bottom:32px;right:32px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:.85rem;font-weight:500;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;pointer-events:none;z-index:999;}
+    #toast.show{opacity:1;transform:translateY(0);}
+    #toast.success{border-color:var(--accent3);color:var(--accent3);}
+    #toast.error{border-color:var(--accent2);color:var(--accent2);}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .empty-state{text-align:center;padding:32px;color:var(--text-muted);font-size:.875rem;}
+    .empty-state span{font-size:2rem;display:block;margin-bottom:8px;}
+    @media(max-width:768px){
+      main{grid-template-columns:1fr;padding:20px 16px;}
+      .add-card,.stats-row{grid-column:1;}
+      .stats-row{grid-template-columns:1fr;}
+      .form-grid,.attendance-grid{grid-template-columns:1fr;}
+      .quick-grid{grid-template-columns:1fr;}
+      header{padding:20px;flex-wrap:wrap;}
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div>
+  <div class="header-left">
     <div class="header-title">🏆 Score Dashboard</div>
-    <div class="header-sub">Classifica in tempo reale</div>
+    <div class="header-sub">Classifica in tempo reale per sessioni</div>
+  </div>
+  <div class="session-wrap">
+    <label>Sessione visualizzata</label>
+    <select id="sessionSelect" onchange="onSessionChange()">
+      <option value="Tutti">Tutti</option>
+    </select>
   </div>
   <div class="last-updated" id="lastUpdated">Caricamento...</div>
 </header>
 
 <main>
 
-  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-icon" style="background:rgba(108,99,255,0.15)">👥</div>
+      <div class="stat-icon" style="background:rgba(108,99,255,.15)">👥</div>
       <div><div class="stat-value" id="statPartecipanti">—</div><div class="stat-label">Partecipanti</div></div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:rgba(255,101,132,0.15)">🚩</div>
+      <div class="stat-icon" style="background:rgba(255,101,132,.15)">🚩</div>
       <div><div class="stat-value" id="statSquadre">—</div><div class="stat-label">Squadre</div></div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:rgba(67,233,123,0.15)">⭐</div>
-      <div><div class="stat-value" id="statTotale">—</div><div class="stat-label">Punti totali assegnati</div></div>
+      <div class="stat-icon" style="background:rgba(67,233,123,.15)">⭐</div>
+      <div><div class="stat-value" id="statTotale">—</div><div class="stat-label">Punti totali</div></div>
     </div>
   </div>
 
-  <!-- GESTIONE PUNTEGGI -->
   <div class="card add-card">
     <div class="card-header">
       <div class="card-icon">➕</div>
@@ -157,15 +150,14 @@
         <div class="card-subtitle">Inserimento manuale, challenge o importazione presenze Teams</div>
       </div>
     </div>
-
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab(event,'manual')">✏️ Manuale</button>
       <button class="tab-btn" onclick="switchTab(event,'challenge')">🏅 Challenge</button>
       <button class="tab-btn" onclick="switchTab(event,'attendance')">📋 Presenze Teams</button>
     </div>
 
-    <!-- TAB MANUALE -->
     <div class="tab-panel active" id="tab-manual">
+      <div class="info-box">I punti verranno salvati nella <strong>sessione selezionata in alto</strong>. Seleziona <strong>"Tutti"</strong> per la vista cumulativa.</div>
       <div class="form-grid">
         <div class="form-group">
           <label>Partecipante</label>
@@ -180,17 +172,13 @@
           <input type="number" id="inputPunti" placeholder="es. 10" min="0"/>
         </div>
         <button class="btn-submit" id="btnSubmit" onclick="submitScore()">
-          <span id="btnText">Salva</span>
-          <span id="btnIcon">💾</span>
+          <span id="btnText">Salva</span><span id="btnIcon">💾</span>
         </button>
       </div>
     </div>
 
-    <!-- TAB CHALLENGE -->
     <div class="tab-panel" id="tab-challenge">
-      <div class="info-box">
-        Seleziona il partecipante, scrivi il nome della challenge, clicca il posto ottenuto per evidenziarlo e poi premi <strong>Assegna</strong>.
-      </div>
+      <div class="info-box">Seleziona partecipante, scrivi il nome della challenge, clicca il posto e premi <strong>Assegna</strong>. I punti vanno nella sessione selezionata in alto.</div>
       <div class="quick-grid">
         <div class="form-group">
           <label>Partecipante</label>
@@ -202,9 +190,9 @@
         </div>
       </div>
       <div class="quick-label">Seleziona il posto</div>
-      <div style="display:flex; gap:16px; align-items:stretch;">
+      <div style="display:flex;gap:16px;align-items:stretch;">
         <div class="quick-buttons">
-          <button class="btn-quick btn-gold"   id="qbtn-30" onclick="selectQuick(30)">
+          <button class="btn-quick btn-gold" id="qbtn-30" onclick="selectQuick(30)">
             <span class="pts">+30</span><span class="lbl">🥇 1° posto</span>
           </button>
           <button class="btn-quick btn-silver" id="qbtn-20" onclick="selectQuick(20)">
@@ -215,20 +203,13 @@
           </button>
         </div>
         <button class="btn-submit" id="btnQuickSubmit" onclick="submitQuick()" disabled>
-          <span id="btnQuickText">Assegna</span>
-          <span id="btnQuickIcon">✅</span>
+          <span id="btnQuickText">Assegna</span><span id="btnQuickIcon">✅</span>
         </button>
       </div>
     </div>
 
-    <!-- TAB PRESENZE TEAMS -->
     <div class="tab-panel" id="tab-attendance">
-      <div class="info-box">
-        Importa il report Teams dallo <strong>sheet presenze separato</strong>. Inserisci il nome esatto del foglio
-        (es. <strong>26-feb</strong>) e il nome dell'attività che apparirà in classifica.
-        Verranno assegnati <strong>10 punti</strong> a chi ha partecipato per almeno <strong>50 minuti</strong>.
-        I duplicati vengono ignorati automaticamente.
-      </div>
+      <div class="info-box">Importa il report Teams dallo <strong>sheet presenze separato</strong>. I punti vanno nella sessione selezionata in alto. Verranno assegnati <strong>10 punti</strong> a chi ha partecipato per almeno <strong>50 minuti</strong>. I duplicati vengono ignorati.</div>
       <div class="attendance-grid">
         <div class="form-group">
           <label>Nome foglio nello sheet presenze</label>
@@ -239,56 +220,50 @@
           <input type="text" id="inputNomeRiunione" placeholder="es. Riunione Teams 26 feb"/>
         </div>
         <button class="btn-submit" id="btnAttendance" onclick="submitAttendance()">
-          <span id="btnAttText">Importa</span>
-          <span id="btnAttIcon">📋</span>
+          <span id="btnAttText">Importa</span><span id="btnAttIcon">📋</span>
         </button>
       </div>
     </div>
-
   </div>
 
-  <!-- CLASSIFICA SQUADRE -->
   <div class="card team-card">
     <div class="card-header">
       <div class="card-icon">🚩</div>
       <div>
-        <div class="card-title">Classifica Squadre</div>
-        <div class="card-subtitle">Punteggio cumulativo per team</div>
+        <div class="card-title" id="teamTitle">Classifica Squadre</div>
+        <div class="card-subtitle" id="teamSubtitle">Punteggio cumulativo</div>
       </div>
     </div>
     <div id="teamLeaderboard"><div class="empty-state"><span>🔄</span>Caricamento...</div></div>
   </div>
 
-  <!-- CLASSIFICA PERSONE -->
   <div class="card person-card">
     <div class="card-header">
       <div class="card-icon">👤</div>
       <div>
-        <div class="card-title">Classifica Persone</div>
-        <div class="card-subtitle">Top performer individuali</div>
+        <div class="card-title" id="personTitle">Classifica Persone</div>
+        <div class="card-subtitle" id="personSubtitle">Punteggio cumulativo</div>
       </div>
     </div>
     <div id="personLeaderboard"><div class="empty-state"><span>🔄</span>Caricamento...</div></div>
   </div>
 
 </main>
-
 <div id="toast"></div>
 
 <script>
   // ════════════════════════════════════════
-  //  ⚙️ CONFIGURAZIONE
+  //  CONFIGURAZIONE
   // ════════════════════════════════════════
   const SHEET_ID        = "1ke54qMCzDy97yV4fauh1F3-h0-bT6BTdDr4Rp4oh6U0";
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMgyP4WL3Paq6xp37EYgvzX7AoWhg2kxFI8aORDOLhVWYrjahFwKiTwt7IUwOrQZTlBA/exec";
   // ════════════════════════════════════════
 
-  const READ_URL         = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Punteggi`;
   const PARTICIPANTS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partecipanti`;
+  let currentSession = "Tutti";
 
-  window.onload = () => { loadParticipants(); loadLeaderboards(); };
+  window.onload = () => { loadParticipants(); loadSessions(); };
 
-  // ── TABS ──
   function switchTab(event, name) {
     document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -296,19 +271,40 @@
     event.target.classList.add("active");
   }
 
-  // ── CARICA PARTECIPANTI ──
+  async function loadSessions() {
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL, { method: "POST", body: new URLSearchParams({ action: "getSessions" }) });
+      const data = await res.json();
+      if (data.status === "ok" && data.sessions) {
+        const sel = document.getElementById("sessionSelect");
+        sel.innerHTML = data.sessions.map(s => `<option value="${s}">${s}</option>`).join("");
+        sel.value = "Tutti";
+      }
+    } catch(e) { console.error("Errore sessioni:", e); }
+    loadLeaderboards();
+  }
+
+  function onSessionChange() {
+    currentSession = document.getElementById("sessionSelect").value;
+    const isSingle = currentSession !== "Tutti";
+    document.getElementById("teamTitle").textContent     = isSingle ? "Classifica Squadre — " + currentSession : "Classifica Squadre";
+    document.getElementById("teamSubtitle").textContent  = isSingle ? "Solo questa sessione" : "Punteggio cumulativo";
+    document.getElementById("personTitle").textContent   = isSingle ? "Classifica Persone — " + currentSession : "Classifica Persone";
+    document.getElementById("personSubtitle").textContent = isSingle ? "Solo questa sessione" : "Punteggio cumulativo";
+    loadLeaderboards();
+  }
+
   async function loadParticipants() {
     try {
       const res  = await fetch(PARTICIPANTS_URL);
       const text = await res.text();
       const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
       const rows = json.table.rows;
-      ["selectPartecipante", "selectChallenge"].forEach(id => {
+      ["selectPartecipante","selectChallenge"].forEach(id => {
         const sel = document.getElementById(id);
         sel.innerHTML = "<option value=''>Seleziona...</option>";
-        rows.forEach((row, index) => {
-          if (index === 0) return;
-          if (!row.c[0] || !row.c[0].v) return;
+        rows.forEach((row, i) => {
+          if (i === 0 || !row.c[0] || !row.c[0].v) return;
           const opt = document.createElement("option");
           opt.value = opt.textContent = row.c[0].v;
           sel.appendChild(opt);
@@ -317,10 +313,11 @@
     } catch(e) { console.error("Errore partecipanti:", e); }
   }
 
-  // ── CLASSIFICHE ──
   async function loadLeaderboards() {
+    const sheet = currentSession === "Tutti" ? "Punteggi" : currentSession;
+    const url   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheet)}&t=${Date.now()}`;
     try {
-      const res  = await fetch(READ_URL + "&t=" + Date.now());
+      const res  = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
       const rows = json.table.rows;
@@ -351,7 +348,7 @@
 
   function renderTeamLeaderboard(scores) {
     const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-    if (!sorted.length) { document.getElementById("teamLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato ancora</div>"; return; }
+    if (!sorted.length) { document.getElementById("teamLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato</div>"; return; }
     const max = sorted[0][1];
     let html = "<table class='leaderboard'><thead><tr><th>#</th><th>Squadra</th><th>Progressione</th><th>Punti</th></tr></thead><tbody>";
     sorted.forEach(([team, score], i) => {
@@ -367,7 +364,7 @@
 
   function renderPersonLeaderboard(scores, teams) {
     const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-    if (!sorted.length) { document.getElementById("personLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato ancora</div>"; return; }
+    if (!sorted.length) { document.getElementById("personLeaderboard").innerHTML = "<div class='empty-state'><span>📭</span>Nessun dato</div>"; return; }
     let html = "<table class='leaderboard'><thead><tr><th>#</th><th>Nome</th><th>Squadra</th><th>Punti</th></tr></thead><tbody>";
     sorted.forEach(([nome, score], i) => {
       const rc = ["rank-1","rank-2","rank-3"][i] || "rank-n";
@@ -378,101 +375,86 @@
     document.getElementById("personLeaderboard").innerHTML = html + "</tbody></table>";
   }
 
-  // ── SUBMIT MANUALE ──
   async function submitScore() {
     const nome     = document.getElementById("selectPartecipante").value;
     const attivita = document.getElementById("inputAttivita").value.trim();
     const punti    = document.getElementById("inputPunti").value.trim();
-    if (!nome)                                 { showToast("⚠️ Seleziona un partecipante", "error"); return; }
-    if (!attivita)                             { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
-    if (!punti || isNaN(punti) || +punti < 0) { showToast("⚠️ Inserisci un punteggio valido", "error"); return; }
-    setBtnLoading("btnSubmit", "btnText", "btnIcon", true, "Salvataggio...");
-    const ok = await callScript({ action: "addScore", nome, attivita, punti });
+    if (!nome)                                { showToast("⚠️ Seleziona un partecipante","error"); return; }
+    if (!attivita)                            { showToast("⚠️ Inserisci il nome dell'attivita","error"); return; }
+    if (!punti||isNaN(punti)||+punti<0)       { showToast("⚠️ Punteggio non valido","error"); return; }
+    setBtnLoading("btnSubmit","btnText","btnIcon",true,"Salvataggio...");
+    const ok = await callScript({ action:"addScore", nome, attivita, punti, sessione:currentSession });
     if (ok) {
-      document.getElementById("selectPartecipante").value = "";
-      document.getElementById("inputAttivita").value      = "";
-      document.getElementById("inputPunti").value         = "";
-      showToast("✅ Punteggio salvato!", "success");
-      setTimeout(loadLeaderboards, 1200);
+      document.getElementById("selectPartecipante").value="";
+      document.getElementById("inputAttivita").value="";
+      document.getElementById("inputPunti").value="";
+      showToast("Punteggio salvato in " + currentSession + "!","success");
+      setTimeout(() => { loadSessions(); loadLeaderboards(); }, 1200);
     }
-    setBtnLoading("btnSubmit", "btnText", "btnIcon", false, "Salva", "💾");
+    setBtnLoading("btnSubmit","btnText","btnIcon",false,"Salva","💾");
   }
 
-  // ── CHALLENGE: selezione posto ──
   let selectedQuickPts = null;
-
   function selectQuick(punti) {
     selectedQuickPts = punti;
-    [10, 20, 30].forEach(p => {
-      document.getElementById("qbtn-" + p).classList.toggle("selected", p === punti);
-    });
-    // abilita tasto Assegna
+    [10,20,30].forEach(p => document.getElementById("qbtn-"+p).classList.toggle("selected", p===punti));
     document.getElementById("btnQuickSubmit").disabled = false;
   }
 
-  // ── SUBMIT CHALLENGE ──
   async function submitQuick() {
     const nome     = document.getElementById("selectChallenge").value;
     const attivita = document.getElementById("inputChallengeName").value.trim();
     const punti    = selectedQuickPts;
-    if (!nome)     { showToast("⚠️ Seleziona un partecipante", "error"); return; }
-    if (!attivita) { showToast("⚠️ Inserisci il nome della challenge", "error"); return; }
-    if (!punti)    { showToast("⚠️ Seleziona un posto (1°, 2° o 3°)", "error"); return; }
-
-    setBtnLoading("btnQuickSubmit", "btnQuickText", "btnQuickIcon", true, "Salvataggio...");
-    const ok = await callScript({ action: "addScore", nome, attivita, punti });
+    if (!nome)     { showToast("⚠️ Seleziona un partecipante","error"); return; }
+    if (!attivita) { showToast("⚠️ Inserisci il nome della challenge","error"); return; }
+    if (!punti)    { showToast("⚠️ Seleziona un posto","error"); return; }
+    setBtnLoading("btnQuickSubmit","btnQuickText","btnQuickIcon",true,"Salvataggio...");
+    const ok = await callScript({ action:"addScore", nome, attivita, punti, sessione:currentSession });
     if (ok) {
-      showToast("✅ +" + punti + " punti assegnati a " + nome + "!", "success");
-      // reset
-      document.getElementById("selectChallenge").value    = "";
-      document.getElementById("inputChallengeName").value = "";
-      selectedQuickPts = null;
-      [10, 20, 30].forEach(p => document.getElementById("qbtn-" + p).classList.remove("selected"));
-      document.getElementById("btnQuickSubmit").disabled = true;
-      setTimeout(loadLeaderboards, 1200);
+      showToast("+" + punti + " punti a " + nome + " in " + currentSession + "!","success");
+      document.getElementById("selectChallenge").value="";
+      document.getElementById("inputChallengeName").value="";
+      selectedQuickPts=null;
+      [10,20,30].forEach(p => document.getElementById("qbtn-"+p).classList.remove("selected"));
+      document.getElementById("btnQuickSubmit").disabled=true;
+      setTimeout(() => { loadSessions(); loadLeaderboards(); }, 1200);
     }
-    setBtnLoading("btnQuickSubmit", "btnQuickText", "btnQuickIcon", false, "Assegna", "✅");
+    setBtnLoading("btnQuickSubmit","btnQuickText","btnQuickIcon",false,"Assegna","✅");
   }
 
-  // ── SUBMIT PRESENZE TEAMS ──
   async function submitAttendance() {
     const foglio   = document.getElementById("inputFoglio").value.trim();
     const attivita = document.getElementById("inputNomeRiunione").value.trim();
-    if (!foglio)   { showToast("⚠️ Inserisci il nome del foglio", "error"); return; }
-    if (!attivita) { showToast("⚠️ Inserisci il nome dell'attività", "error"); return; }
-    setBtnLoading("btnAttendance", "btnAttText", "btnAttIcon", true, "Importazione...");
+    if (!foglio)   { showToast("⚠️ Inserisci il nome del foglio","error"); return; }
+    if (!attivita) { showToast("⚠️ Inserisci il nome dell'attivita","error"); return; }
+    setBtnLoading("btnAttendance","btnAttText","btnAttIcon",true,"Importazione...");
     try {
-      const res  = await fetch(APPS_SCRIPT_URL, { method: "POST", body: new URLSearchParams({ action: "importAttendance", foglio, attivita }) });
+      const res  = await fetch(APPS_SCRIPT_URL, { method:"POST", body:new URLSearchParams({ action:"importAttendance", foglio, attivita, sessione:currentSession }) });
       const data = await res.json();
-      if (data.status === "ok") {
-        showToast("✅ Importati " + data.assegnati + " partecipanti con ≥50 min!", "success");
-        document.getElementById("inputFoglio").value       = "";
-        document.getElementById("inputNomeRiunione").value = "";
-        setTimeout(loadLeaderboards, 1200);
-      } else {
-        showToast("❌ " + (data.message || "Errore importazione"), "error");
-      }
-    } catch(e) { showToast("❌ Errore di rete, riprova", "error"); }
-    setBtnLoading("btnAttendance", "btnAttText", "btnAttIcon", false, "Importa", "📋");
+      if (data.status==="ok") {
+        showToast("Importati " + data.assegnati + " partecipanti in " + currentSession + "!","success");
+        document.getElementById("inputFoglio").value="";
+        document.getElementById("inputNomeRiunione").value="";
+        setTimeout(() => { loadSessions(); loadLeaderboards(); }, 1200);
+      } else { showToast("Errore: " + (data.message||"riprova"),"error"); }
+    } catch(e) { showToast("Errore di rete","error"); }
+    setBtnLoading("btnAttendance","btnAttText","btnAttIcon",false,"Importa","📋");
   }
 
-  // ── HELPER: chiama Apps Script ──
   async function callScript(payload) {
     try {
-      const res  = await fetch(APPS_SCRIPT_URL, { method: "POST", body: new URLSearchParams(payload) });
+      const res  = await fetch(APPS_SCRIPT_URL, { method:"POST", body:new URLSearchParams(payload) });
       const data = await res.json();
-      if (data.status !== "ok") { showToast("❌ " + (data.message || "Errore"), "error"); return false; }
+      if (data.status!=="ok") { showToast("Errore: " + (data.message||"riprova"),"error"); return false; }
       return true;
-    } catch(e) { showToast("❌ Errore di rete, riprova", "error"); return false; }
+    } catch(e) { showToast("Errore di rete","error"); return false; }
   }
 
-  // ── HELPER: loading button ──
   function setBtnLoading(btnId, textId, iconId, loading, loadingText, defaultIcon) {
-    const btn = document.getElementById(btnId);
-    if (!btn) return;
+    const btn = document.getElementById(btnId); if (!btn) return;
     btn.disabled = loading;
-    if (textId) document.getElementById(textId).textContent = loading ? loadingText : (defaultIcon === "📋" ? "Importa" : defaultIcon === "✅" ? "Assegna" : "Salva");
-    if (iconId) document.getElementById(iconId).innerHTML   = loading ? "<span class='spinner'></span>" : (defaultIcon || "");
+    if (textId) document.getElementById(textId).textContent = loading ? loadingText : (defaultIcon==="📋"?"Importa":defaultIcon==="✅"?"Assegna":"Salva");
+    if (iconId) document.getElementById(iconId).innerHTML   = loading ? "<span class='spinner'></span>" : (defaultIcon||"");
   }
 
   function showToast(msg, type) {
