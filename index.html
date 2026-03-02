@@ -313,16 +313,24 @@
     } catch(e) { console.error("Errore partecipanti:", e); }
   }
 
-  async function loadLeaderboards() {
-    const sheet = currentSession === "Tutti" ? "Punteggi" : currentSession;
-    const url   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheet)}&t=${Date.now()}`;
+ async function loadLeaderboards() {
+  const sel = document.getElementById("sessionSelect");
+  const allSessions = Array.from(sel.options)
+    .map(o => o.value)
+    .filter(v => v !== "Tutti");
+
+  const sheets = currentSession === "Tutti" ? allSessions : [currentSession];
+
+  const teamScores = {}, personScores = {}, personTeam = {};
+  let total = 0;
+
+  for (const sheet of sheets) {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheet)}&t=${Date.now()}`;
     try {
       const res  = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
-      const rows = json.table.rows;
-      const teamScores = {}, personScores = {}, personTeam = {};
-      let total = 0;
+      const rows = json.table.rows || [];
       rows.forEach(row => {
         if (!row.c[0] || !row.c[0].v) return;
         const nome    = row.c[0].v;
@@ -333,18 +341,17 @@
         personTeam[nome]    = squadra;
         total              += punti;
       });
-      document.getElementById("statPartecipanti").textContent = Object.keys(personScores).length;
-      document.getElementById("statSquadre").textContent      = Object.keys(teamScores).length;
-      document.getElementById("statTotale").textContent       = total;
-      renderTeamLeaderboard(teamScores);
-      renderPersonLeaderboard(personScores, personTeam);
-      document.getElementById("lastUpdated").textContent = "Aggiornato: " + new Date().toLocaleTimeString("it-IT");
-    } catch(e) {
-      ["teamLeaderboard","personLeaderboard"].forEach(id => {
-        document.getElementById(id).innerHTML = "<div class='empty-state'><span>⚠️</span>Errore caricamento dati</div>";
-      });
-    }
+    } catch(e) { console.warn("Foglio non leggibile:", sheet); }
   }
+
+  document.getElementById("statPartecipanti").textContent = Object.keys(personScores).length;
+  document.getElementById("statSquadre").textContent      = Object.keys(teamScores).length;
+  document.getElementById("statTotale").textContent       = total;
+  renderTeamLeaderboard(teamScores);
+  renderPersonLeaderboard(personScores, personTeam);
+  document.getElementById("lastUpdated").textContent = "Aggiornato: " + new Date().toLocaleTimeString("it-IT");
+}
+
 
   function renderTeamLeaderboard(scores) {
     const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
